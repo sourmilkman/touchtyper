@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#111827" />
+    <meta name="description" content="A portrait-first touch-typing course and game for physical keyboards." />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.svg" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>TouchTyper</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to lesson</a>
+    <div class="app-shell">
+      <header class="topbar">
+        <button class="brand" type="button" data-view-link="home" aria-label="TouchTyper home">
+          <span class="brand-mark" aria-hidden="true">T</span>
+          <span>TouchTyper</span>
+        </button>
+        <div class="top-actions">
+          <span class="streak" id="streakBadge" title="Practice streak">🔥 <b>0</b></span>
+          <button class="icon-button" id="settingsButton" type="button" aria-label="Open settings">⚙</button>
+        </div>
+      </header>
+
+      <main id="main" tabindex="-1">
+        <section class="view active" id="homeView" data-view="home" aria-labelledby="welcomeTitle">
+          <div class="hero-card">
+            <div class="eyebrow" id="todayLabel">TODAY'S PRACTICE</div>
+            <h1 id="welcomeTitle">Build calm, accurate hands.</h1>
+            <p id="heroMessage">Start with F and J. Their raised bumps bring your index fingers home.</p>
+            <div class="hero-stats" aria-label="Current progress">
+              <div><strong id="heroLevel">1</strong><span>Level</span></div>
+              <div><strong id="heroAccuracy">—</strong><span>Accuracy</span></div>
+              <div><strong id="heroWpm">—</strong><span>Best WPM</span></div>
+            </div>
+            <button class="primary-button" id="continueButton" type="button">Begin lesson 1 <span aria-hidden="true">→</span></button>
+          </div>
+
+          <section class="daily-goal" aria-labelledby="goalTitle">
+            <div class="section-heading">
+              <div>
+                <span class="eyebrow">DAILY RHYTHM</span>
+                <h2 id="goalTitle">Ten focused minutes</h2>
+              </div>
+              <span id="goalMinutes">0 / 10 min</span>
+            </div>
+            <div class="progress-track" role="progressbar" aria-label="Daily practice goal" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
+              <span id="goalBar"></span>
+            </div>
+            <p class="microcopy">Accuracy first. Speed follows repetition.</p>
+          </section>
+
+          <section aria-labelledby="nextTitle">
+            <div class="section-heading">
+              <div>
+                <span class="eyebrow">LEARNING PATH</span>
+                <h2 id="nextTitle">Up next</h2>
+              </div>
+              <button class="text-button" type="button" data-view-link="learn">See all</button>
+            </div>
+            <div id="nextLessons" class="lesson-preview"></div>
+          </section>
+        </section>
+
+        <section class="view" id="learnView" data-view="learn" aria-labelledby="learnTitle">
+          <div class="page-heading">
+            <span class="eyebrow">FROM FIRST KEYS TO FLUENCY</span>
+            <h1 id="learnTitle">Your learning path</h1>
+            <p>Lessons unlock when you meet both the accuracy and speed targets.</p>
+          </div>
+          <div class="course-legend" aria-label="Lesson status key">
+            <span><i class="legend-dot complete"></i>Mastered</span>
+            <span><i class="legend-dot current"></i>Ready</span>
+            <span><i class="legend-dot locked"></i>Locked</span>
+          </div>
+          <div id="lessonList" class="lesson-list"></div>
+        </section>
+
+        <section class="view trainer-view" id="trainerView" data-view="trainer" aria-labelledby="trainerTitle">
+          <div class="trainer-topline">
+            <button class="icon-button back-button" id="trainerBack" type="button" aria-label="Leave exercise">←</button>
+            <div>
+              <span class="eyebrow" id="trainerKicker">LESSON 1</span>
+              <h1 id="trainerTitle">Finding F &amp; J</h1>
+            </div>
+            <button class="icon-button" id="restartButton" type="button" aria-label="Restart exercise">↻</button>
+          </div>
+
+          <div class="session-metrics" aria-label="Live statistics">
+            <div><strong id="liveWpm">0</strong><span>WPM</span></div>
+            <div><strong id="liveAccuracy">100%</strong><span>Accuracy</span></div>
+            <div><strong id="liveTime">0:00</strong><span>Time</span></div>
+          </div>
+
+          <div class="instruction-card" id="instructionCard">
+            <div class="finger-visual" id="fingerVisual" aria-hidden="true">
+              <span class="hand left">☝</span><span class="home-bars">F&nbsp;&nbsp;J</span><span class="hand right">☝</span>
+            </div>
+            <p id="instructionText">Place your index fingers on the raised bumps. Keep the other fingers gently curved over the home row.</p>
+            <button class="small-button" id="readyButton" type="button">I'm ready</button>
+          </div>
+
+          <section class="typing-stage is-hidden" id="typingStage" aria-label="Typing exercise">
+            <div class="prompt" id="typingPrompt" aria-live="polite" aria-atomic="false"></div>
+            <p class="finger-cue" id="fingerCue"><span>F</span> Left index finger</p>
+            <div class="keyboard" id="keyboard" aria-label="Keyboard finger guide"></div>
+            <p class="keyboard-status" id="keyboardStatus" aria-live="assertive">Press the highlighted key on your physical keyboard.</p>
+          </section>
+        </section>
+
+        <section class="view" id="gamesView" data-view="games" aria-labelledby="gamesTitle">
+          <div class="page-heading">
+            <span class="eyebrow">PLAY WITH PURPOSE</span>
+            <h1 id="gamesTitle">Training games</h1>
+            <p>Games use only the keys you have learned. More unlock as your control grows.</p>
+          </div>
+          <div id="gameList" class="game-list"></div>
+        </section>
+
+        <section class="view" id="progressView" data-view="progress" aria-labelledby="progressTitle">
+          <div class="page-heading">
+            <span class="eyebrow">YOUR PRACTICE, MADE VISIBLE</span>
+            <h1 id="progressTitle">Progress</h1>
+            <p>Speed is useful; dependable accuracy is the real foundation.</p>
+          </div>
+          <div class="stat-grid">
+            <article><span>Best speed</span><strong id="progressWpm">0</strong><small>WPM</small></article>
+            <article><span>Average accuracy</span><strong id="progressAccuracy">—</strong><small>all sessions</small></article>
+            <article><span>Practice time</span><strong id="progressMinutes">0</strong><small>minutes</small></article>
+            <article><span>Lessons mastered</span><strong id="progressLessons">0</strong><small id="progressLessonTotal">of 18</small></article>
+          </div>
+          <section class="panel" aria-labelledby="keyTitle">
+            <div class="section-heading">
+              <div><span class="eyebrow">ADAPTIVE PRACTICE</span><h2 id="keyTitle">Keys to strengthen</h2></div>
+            </div>
+            <div id="weakKeys" class="weak-keys"></div>
+          </section>
+          <section class="panel" aria-labelledby="historyTitle">
+            <div class="section-heading">
+              <div><span class="eyebrow">RECENT SESSIONS</span><h2 id="historyTitle">Practice history</h2></div>
+            </div>
+            <div id="historyList" class="history-list"></div>
+          </section>
+        </section>
+      </main>
+
+      <nav class="bottom-nav" aria-label="Main navigation">
+        <button class="active" type="button" data-view-link="home"><span aria-hidden="true">⌂</span>Home</button>
+        <button type="button" data-view-link="learn"><span aria-hidden="true">⌨</span>Learn</button>
+        <button type="button" data-view-link="games"><span aria-hidden="true">◆</span>Games</button>
+        <button type="button" data-view-link="progress"><span aria-hidden="true">↗</span>Progress</button>
+      </nav>
+    </div>
+
+    <dialog id="resultDialog" class="modal result-modal">
+      <div class="result-burst" id="resultBurst" aria-hidden="true">★</div>
+      <span class="eyebrow" id="resultKicker">LESSON COMPLETE</span>
+      <h2 id="resultTitle">Strong foundations.</h2>
+      <p id="resultMessage">You met both targets and unlocked the next lesson.</p>
+      <div class="result-stats">
+        <div><strong id="resultWpm">0</strong><span>WPM</span></div>
+        <div><strong id="resultAccuracy">0%</strong><span>Accuracy</span></div>
+        <div><strong id="resultErrors">0</strong><span>Errors</span></div>
+      </div>
+      <div class="modal-actions">
+        <button class="secondary-button" id="retryButton" type="button">Try again</button>
+        <button class="primary-button" id="resultContinue" type="button">Continue</button>
+      </div>
+    </dialog>
+
+    <dialog id="settingsDialog" class="modal settings-modal">
+      <div class="modal-heading">
+        <div><span class="eyebrow">PREFERENCES</span><h2>Settings</h2></div>
+        <button class="icon-button" id="closeSettings" type="button" aria-label="Close settings">×</button>
+      </div>
+      <label class="setting-row"><span><b>Key sounds</b><small>Quiet audio feedback</small></span><input id="soundToggle" type="checkbox" /></label>
+      <label class="setting-row"><span><b>Haptic feedback</b><small>Vibrate gently after errors</small></span><input id="hapticToggle" type="checkbox" checked /></label>
+      <label class="setting-row"><span><b>High contrast</b><small>Stronger key and text separation</small></span><input id="contrastToggle" type="checkbox" /></label>
+      <div class="settings-actions">
+        <button class="secondary-button" id="exportButton" type="button">Export progress</button>
+        <label class="secondary-button file-button">Import progress<input id="importInput" type="file" accept="application/json" /></label>
+        <button class="danger-button" id="resetButton" type="button">Reset all progress</button>
+      </div>
+      <p class="data-note">Your data stays on this device unless you export it.</p>
+    </dialog>
+
+    <dialog id="onboardingDialog" class="modal onboarding-modal">
+      <span class="onboarding-icon" aria-hidden="true">⌨</span>
+      <span class="eyebrow">WELCOME TO TOUCHTYPER</span>
+      <h2>Look at the screen,<br />not your hands.</h2>
+      <p>Connect your physical keyboard, sit comfortably, and let the highlighted finger guide you. We begin with only two keys.</p>
+      <ul>
+        <li><span>1</span>Keep wrists level and shoulders relaxed.</li>
+        <li><span>2</span>Return every finger to its home key.</li>
+        <li><span>3</span>Choose accuracy before speed.</li>
+      </ul>
+      <button class="primary-button" id="startOnboarding" type="button">Start at the beginning</button>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
